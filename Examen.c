@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 struct nodo *nuevoNodo(int dato);
-void insertarNodo(struct nodo *nd, struct nodo* nodo);
+void insertarNodo(struct nodo *nd, struct nodo *nodo);
 int busqueda(struct nodo *raiz, int dato);
 
 struct nodo
@@ -14,7 +14,7 @@ struct nodo
 
 int main()
 {
-	int num, lv = 0;
+	int num, lv = 0, r=0;
 	struct nodo *raiz = NULL;
 	raiz = nuevoNodo(10);
 	insertarNodo(raiz, nuevoNodo(5));
@@ -28,12 +28,12 @@ int main()
 	printf("Ingresa el numero a buscar en el arbol: ");
 	scanf("%d", &num);
 	lv = busqueda(raiz, num);
-	if (lv > 0)
+	if (lv > 0){
 		printf("Numero %d en el nivel: %d \n", num, lv);
-	else
+	}else{
 		printf("Numero no encontrado\n");
-
-	return 0;
+}
+ 
 }
 
 struct nodo *nuevoNodo(int dato)
@@ -46,16 +46,21 @@ struct nodo *nuevoNodo(int dato)
 	return nuevo_nodo;
 }
 
-void insertarNodo(struct nodo *nd,struct nodo* nodo){
-	if (nd != NULL && nodo != NULL) {
-	nodo->lv = nd->lv + 1;
+void insertarNodo(struct nodo *nd, struct nodo *nodo)
+{
+	if (nd != NULL && nodo != NULL)
+	{
+		nodo->lv = nd->lv + 1;
 		nodo->lv = nodo->lv + 1;
-		if (nodo->dato > nd->dato) {
+		if (nodo->dato > nd->dato)
+		{
 			if (nd->hijoizq == NULL)
 				nd->hijoder = nodo;
 			else
 				insertarNodo(nd->hijoder, nodo);
-		} else {
+		}
+		else
+		{
 			if (nd->hijoizq == NULL)
 				nd->hijoizq = nodo;
 			else
