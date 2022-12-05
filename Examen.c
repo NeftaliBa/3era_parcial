@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node *new_node(int dato);
-void insert_node(struct node *nd, struct node *nodo);
-int search(struct node *raiz, int dato);
+struct nodo *nuevoNodo(int dato);
+void insertarNodo(struct nodo *nd, struct nodo* nodo);
+int busqueda(struct nodo *raiz, int dato);
 
 struct nodo
 {
@@ -17,18 +17,17 @@ int main()
 	int num, lv = 0;
 	struct nodo *raiz = NULL;
 	raiz = nuevoNodo(10);
-	insertarNodo(raiz, 15);
-	insertarNodo(raiz, 5);
-	insertarNodo(raiz, 3);
-	insertarNodo(raiz, 6);
-	insertarNodo(raiz, 17);
-	insertarNodo(raiz, 13);
-	insertarNodo(raiz, 21);
-	insertarNodo(raiz, 3);
+	insertarNodo(raiz, nuevoNodo(5));
+	insertarNodo(raiz, nuevoNodo(3));
+	insertarNodo(raiz, nuevoNodo(6));
+	insertarNodo(raiz, nuevoNodo(17));
+	insertarNodo(raiz, nuevoNodo(13));
+	insertarNodo(raiz, nuevoNodo(21));
+	insertarNodo(raiz, nuevoNodo(3));
 
 	printf("Ingresa el numero a buscar en el arbol: ");
 	scanf("%d", &num);
-	lv = search(raiz, num);
+	lv = busqueda(raiz, num);
 	if (lv > 0)
 		printf("Numero %d en el nivel: %d \n", num, lv);
 	else
@@ -47,43 +46,35 @@ struct nodo *nuevoNodo(int dato)
 	return nuevo_nodo;
 }
 
-void insertarNodo(struct nodo *nd, int dato)
-{
-	if (dato < nd->dato)
-	{
-		if (nd->hijoder == NULL)
-		{
-			nd->hijoder = nuevoNodo(dato);
-		}
-		else
-		{
-			insertarNodo(nd->hijoder, dato);
-		}
-	}
-	else
-	{
-		if (nd->hijoizq == NULL)
-		{
-			nd->hijoizq = nuevoNodo(dato);
-		}
-		else
-		{
-			insertarNodo(nd->hijoizq, dato);
+void insertarNodo(struct nodo *nd,struct nodo* nodo){
+	if (nd != NULL && nodo != NULL) {
+	nodo->lv = nd->lv + 1;
+		nodo->lv = nodo->lv + 1;
+		if (nodo->dato > nd->dato) {
+			if (nd->hijoizq == NULL)
+				nd->hijoder = nodo;
+			else
+				insertarNodo(nd->hijoder, nodo);
+		} else {
+			if (nd->hijoizq == NULL)
+				nd->hijoizq = nodo;
+			else
+				insertarNodo(nd->hijoizq, nodo);
 		}
 	}
 }
 
-void busqueda(struct node *raiz, int dato)
+int busqueda(struct nodo *raiz, int dato)
 {
 	int l = 0;
 	if (raiz == NULL)
 		return 0;
 	if (raiz->dato == dato)
 		return raiz->lv;
-	l = search(raiz->hijoizq, dato);
+	l = busqueda(raiz->hijoizq, dato);
 	if (l > 0)
 		return l;
-	l = search(raiz->hijoder, dato);
+	l = busqueda(raiz->hijoder, dato);
 	if (l > 0)
 		return l;
 	return 0;
